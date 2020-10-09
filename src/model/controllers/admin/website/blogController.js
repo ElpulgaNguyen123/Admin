@@ -127,6 +127,7 @@ let getEditBlog = async (req, res, next) => {
         await pool.query(query, blog_id, function (error, rows, fields) {
             if (error) throw error;
             res.render('admin/website/blog/edit-blog', {
+                title : 'Chỉnh sừa bài viết',
                 blog: rows[0],
                 user: req.user,
                 errors: req.flash('Errors'),
@@ -170,8 +171,6 @@ let postEditBlog = (req, res, next) => {
 
             let current_datetime = new Date()
             let formatted_date_update = current_datetime.getFullYear() + "-" + (current_datetime.getMonth() + 1) + "-" + current_datetime.getDate();
-            console.log(formatted_date);
-
             var queryUpdate = `
             UPDATE blog
             SET title = ?, 

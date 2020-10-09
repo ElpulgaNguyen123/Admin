@@ -70,6 +70,12 @@ a.btn.hor-grd:hover {
 }
 /* cart end */
 
+/* button start*/
+.btn-grey {
+    color: #cbcbcb;
+}
+/* button end*/
+
 /* footer css start */
 .footer {
     padding: 21px 15px 20px;

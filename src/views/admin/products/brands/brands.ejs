@@ -1,221 +1,167 @@
 <% extend("../../../admin.ejs") %>
-        <div class="main-body">
-            <div class="page-wrapper">
-                <!-- Page-header start -->
-                <div class="page-header card">
-                    <div class="row align-items-end">
-                        <div class="col-lg-8">
-                            <div class="page-header-title">
-                                <i class="icofont icofont-file-code bg-c-blue"></i>
-                                <div class="d-inline">
-                                    <h4> <%= title %> </h4>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="page-header-breadcrumb">
-                                <ul class="breadcrumb-title">
-                                    <li class="breadcrumb-item">
-                                        <a href="/admin" title="Trang chủ">
-                                            <i class="icofont icofont-home"></i>
-                                        </a>
-                                    </li>
-                                    <li class="breadcrumb-item"><%= title %>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
+<div class="container-fluid">
+    <!-- start page title -->
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box">
+                <div class="page-title-right">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item"><a href="/admin">UTDESIGN</a></li>
+                        <li class="breadcrumb-item active"><%= title %></li>
+                    </ol>
                 </div>
-                <!-- Page-header end -->
-                <div class="page-body">
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <% if(errors != ""){%>
-                            <% errors.forEach((item) => {%>
-                            <div class="alert alert-danger" role="alert">
-                                <strong class="alert-link"><%- item %></strong>.
-                            </div>
-                            <%})%>
-                            <%}%>
-                            <% if(success != ""){%>
-                            <% success.forEach((item) => {%>
-                            <div class="alert alert-success" role="alert">
-                                <strong class="alert-link"><%- item %></strong>.
-                            </div>
-                            <%})%>
-                            <%}%>
-                        </div>
-                        <div class="col-md-12 col-lg-4 col-xl-4">
-                            <div class="card project-task">
-                                <div class="card-header">
-                                    <div class="card-header-left ">
-                                        <h5 class="mb-5"> <strong>Thêm <%= title %></strong> </h5>
-                            <span> <Strong> Lưu ý : </Strong> Xóa một <%= title %> sẽ xóa nó khỏi tất cả các
-                                sản phẩm đã được gán, tái tạo một thuộc tính sẽ không tự động quay trở lại
-                                các sản phẩm.</span>
-                        </div>
-                        <div class="card-header-right">
-                            <ul class="list-unstyled card-option">
-                                <li><i class="icofont icofont-simple-left "></i></li>
-                                <li><i class="icofont icofont-maximize full-card"></i></li>
-                                <li><i class="icofont icofont-minus minimize-card"></i></li>
-                                <li><i class="icofont icofont-refresh reload-card"></i></li>
-                                <li><i class="icofont icofont-error close-card"></i></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="card-block p-b-10">
-                        <form action="/admin/brand/add-brand" id="brand_form" method="POST"
-                            enctype="multipart/form-data">
-                            <div class="row">
-                                <div class="col-xs-12 col-md-12">
-                                    <div class="form-group text-center">
-                                        <div class="image-border">
-                                            <label class="font-weight-bold col-form-label" for="brand_image">
-                                                Chọn hình ảnh cho thương hiệu
-                                            </label>
-                                            <div class="avatar-change">
-                                                <img id="image-avatar-preview" src="" alt="">
-                                            </div>
-                                            <button id="trigger_button"
-                                                class="btn btn-out-dotted btn-grd-primary mt-4">Chọn
-                                                hình ảnh...</button>
-                                            <input type="file" id="brand_image" name="brand_image" />
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="font-weight-bold col-form-label" for="brand_name">
-                                            Tên <%= title %>
-                                        </label>
-                                        <input type="text" name="brand_name" id="brand_name"
-                                            onkeyup="to_slug($(this).val())" class="form-control"
-                                            placeholder="Tên <%= title %>" required>
-                                        <small class="form-text text-muted"> Tên <%= title %> xẽ xuất hiện ở
-                                            trên giao diện website của bạn </small>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="font-weight-bold col-form-label" for="attribute_slug">
-                                            Slug
-                                        </label>
-                                        <input disabled type="text" name="brand_slug" id="brand_slug" class="form-control"
-                                            placeholder="Slug">
-                                        <small class="form-text text-muted"> Slug là đường dẫn thân thiện và
-                                            ngắn gọn của tên thuộc tính </small>
-                                    </div>
-                                    <script>
-                                        function to_slug(str) {
-                                            // Chuyển hết sang chữ thường
-                                            str = str.toLowerCase();
-                                            // xóa dấu
-                                            str = str.replace(/(à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ)/g, 'a');
-                                            str = str.replace(/(è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ)/g, 'e');
-                                            str = str.replace(/(ì|í|ị|ỉ|ĩ)/g, 'i');
-                                            str = str.replace(/(ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ)/g, 'o');
-                                            str = str.replace(/(ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ)/g, 'u');
-                                            str = str.replace(/(ỳ|ý|ỵ|ỷ|ỹ)/g, 'y');
-                                            str = str.replace(/(đ)/g, 'd');
-
-                                            // Xóa ký tự đặc biệt
-                                            str = str.replace(/([^0-9a-z-\s])/g, '');
-
-                                            // Xóa khoảng trắng thay bằng ký tự -
-                                            str = str.replace(/(\s+)/g, '-');
-
-                                            // xóa phần dự - ở đầu
-                                            str = str.replace(/^-+/g, '');
-
-                                            // xóa phần dư - ở cuối
-                                            str = str.replace(/-+$/g, '');
-                                            document.getElementById('brand_slug').value = str;
-                                            // return
-                                            return str;
-                                        }
-                                    </script>
-                                </div>
-                            </div>
-                            <button type="submit" class="btn btn-grd-success mt-3">Thêm vào</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-12 col-lg-8 col-xl-8">
-                <div class="card">
-                    <div class="card-header">
-                        <h5> <strong> Danh sách <%= title %></strong></h5>
-                        <div class="card-header-right">
-                            <ul class="list-unstyled card-option">
-                                <li><i class="icofont icofont-simple-left "></i></li>
-                                <li><i class="icofont icofont-maximize full-card"></i></li>
-                                <li><i class="icofont icofont-minus minimize-card"></i></li>
-                                <li><i class="icofont icofont-refresh reload-card"></i></li>
-                                <li><i class="icofont icofont-error close-card"></i></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="card-block table-border-style mt-2">
-                        <div class="table-responsive">
-                            <table class="table table-striped table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th> STT </th>
-                                        <th> Hình ảnh </th>
-                                        <th> Tên </th>
-                                        <th> Slug </th>
-                                        <th> hành động </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <% brands.forEach(function(brand, index){ %>
-                                    <tr>
-                                        <th scope="row"><%= index %></th>
-                                        <% if(brand.image != '' && brand.image != null){ %>
-                                        <td class="product-image">
-                                            <img class="sp_img-<%= brand.id%>"
-                                                src="/public/uploads/brands/<%= brand.image %>"
-                                                alt="<%= brand.name %>">
-                                        </td>
-                                        <% } else{ %>
-                                        <td class="product-image">
-                                            <img class="sp_img-<%= brand.id%>" src="/admin/public/images/example.png"
-                                                alt="<%= brand.name %>">
-                                        </td>
-                                        <% } %>
-                                        <td class="font-weight-bold">
-                                            <p> <%= brand.name %> </p>
-                                        </td>
-                                        <td class="font-weight-bold">
-                                            <p> <%= brand.slug %> </p>
-                                        </td>
-                                        <td>
-                                            <div class="btn-group" role="group" aria-label="Basic example">
-                                                <a href="/admin/brand/edit-brand/<%= brand.id %>"
-                                                    class="btn hor-grd btn-grd-warning" title="Sửa thương hiệu">
-                                                    <i class="icofont icofont-edit"></i>
-                                                </a>
-                                                <a href="/admin/brand/delete-brand/<%= brand.id %>"
-                                                    class="delete-brand-confirm btn hor-grd btn-grd-danger"
-                                                    data-url="/admin/brand/delete-brand/<%= brand.id %>"
-                                                    title="Xóa thương hiệu" data-target="#delete-brand-modal"
-                                                    data-toggle="modal">
-                                                    <i class="icofont icofont-ui-delete"></i>
-                                                </a>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <% }); %>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
+                <h4 class="page-title"><%= title %></h4>
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col-sm-12 col-md-4">
+            <div class="card-box">
+                <h5 class="mb-5"> <strong>Thêm <%= title %></strong> </h5>
+                <span> <Strong> Lưu ý : </Strong> Xóa một <%= title %> sẽ xóa nó khỏi tất cả các
+                    sản phẩm đã được gán, tái tạo một thuộc tính sẽ không tự động quay trở lại
+                    các sản phẩm.</span>
+                <% if(errors != ""){%>
+                <% errors.forEach((item) => {%>
+                <div class="alert alert-danger" role="alert">
+                    <strong class="alert-link"><%- item %></strong>.
+                </div>
+                <%})%>
+                <%}%>
+                            <% if(success != ""){%>
+                <% success.forEach((item) => {%>
+                <div class="alert alert-success" role="alert">
+                    <strong class="alert-link"><%- item %></strong>.
+                </div>
+                <%})%>
+                <%}%>
+                <form action="/admin/brand/add-brand" id="brand_form" method="POST" enctype="multipart/form-data">
+                    <div class="row">
+                        <div class="col-xs-12 col-md-12">
+                            <div class="form-group text-center">
+                                <div class="image-border">
+                                    <label class="font-weight-bold col-form-label" for="brand_image">
+                                        Chọn hình ảnh cho thương hiệu
+                                    </label>
+                                    <div class="avatar-change">
+                                        <img id="image-avatar-preview" src="" alt="">
+                                    </div>
+                                    <button id="trigger_button" class="btn btn-success btn-grd-primary mt-4">Chọn
+                                        hình ảnh...</button>
+                                    <input type="file" id="brand_image" name="brand_image" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="font-weight-bold col-form-label" for="brand_name">
+                                    Tên <%= title %>
+                </label>
+                <input type="text" name="brand_name" id="brand_name" onkeyup="to_slug($(this).val())"
+                    class="form-control" placeholder="Tên <%= title %>" required>
+                <small class="form-text text-muted"> Tên <%= title %> xẽ xuất hiện ở
+                    trên giao diện website của bạn </small>
+            </div>
+            <div class="form-group">
+                <label class="font-weight-bold col-form-label" for="attribute_slug">
+                    Slug
+                </label>
+                <input disabled type="text" name="brand_slug" id="brand_slug" class="form-control" placeholder="Slug">
+                <small class="form-text text-muted"> Slug là đường dẫn thân thiện và
+                    ngắn gọn của tên thuộc tính </small>
+            </div>
+            <script>
+                function to_slug(str) {
+                    // Chuyển hết sang chữ thường
+                    str = str.toLowerCase();
+                    // xóa dấu
+                    str = str.replace(/(à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ)/g, 'a');
+                    str = str.replace(/(è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ)/g, 'e');
+                    str = str.replace(/(ì|í|ị|ỉ|ĩ)/g, 'i');
+                    str = str.replace(/(ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ)/g, 'o');
+                    str = str.replace(/(ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ)/g, 'u');
+                    str = str.replace(/(ỳ|ý|ỵ|ỷ|ỹ)/g, 'y');
+                    str = str.replace(/(đ)/g, 'd');
+
+                    // Xóa ký tự đặc biệt
+                    str = str.replace(/([^0-9a-z-\s])/g, '');
+
+                    // Xóa khoảng trắng thay bằng ký tự -
+                    str = str.replace(/(\s+)/g, '-');
+
+                    // xóa phần dự - ở đầu
+                    str = str.replace(/^-+/g, '');
+
+                    // xóa phần dư - ở cuối
+                    str = str.replace(/-+$/g, '');
+                    document.getElementById('brand_slug').value = str;
+                    // return
+                    return str;
+                }
+            </script>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-success mt-3">Thêm vào</button>
+    </form>
 </div>
-<div id="styleSelector">
+</div>
+<div class="col-md-12 col-lg-8 col-xl-8">
+    <div class="card-box">
+        <h5> <strong> Danh sách <%= title %></strong></h5>
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th> STT </th>
+                        <th> Hình ảnh </th>
+                        <th> Tên </th>
+                        <th> Slug </th>
+                        <th> hành động </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% brands.forEach(function(brand, index){ %>
+                    <tr>
+                        <th scope="row"><%= index %></th>
+                        <% if(brand.image != '' && brand.image != null){ %>
+                        <td class="product-image">
+                            <img class="sp_img-<%= brand.id%>" src="/public/uploads/brands/<%= brand.image %>"
+                                alt="<%= brand.name %>">
+                        </td>
+                        <% } else{ %>
+                        <td class="product-image">
+                            <img class="sp_img-<%= brand.id%>" src="/admin/public/images/example.png"
+                                alt="<%= brand.name %>">
+                        </td>
+                        <% } %>
+                        <td class="font-weight-bold">
+                            <p> <%= brand.name %> </p>
+                        </td>
+                        <td class="font-weight-bold">
+                            <p> <%= brand.slug %> </p>
+                        </td>
+                        <td>
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                                <a href="/admin/brand/edit-brand/<%= brand.id %>" class="btn hor-grd btn-grd-warning"
+                                    title="Sửa thương hiệu">
+                                    <i class="icofont icofont-edit"></i>
+                                </a>
+                                <a href="/admin/brand/delete-brand/<%= brand.id %>"
+                                    class="delete-brand-confirm btn hor-grd btn-grd-danger"
+                                    data-url="/admin/brand/delete-brand/<%= brand.id %>" title="Xóa thương hiệu"
+                                    data-target="#delete-brand-modal" data-toggle="modal">
+                                    <i class="icofont icofont-ui-delete"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 </div>
+</div>
+
 <script>
     $('.delete-brand-confirm').on('click', function (e) {
         e.preventDefault();
