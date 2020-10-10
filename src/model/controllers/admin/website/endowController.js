@@ -84,7 +84,6 @@ let addEndowPost = (req, res, next) => {
                     filename,
                 req.body.endow_description]
             ];
-
             pool.query(queryNew, [endowValues], function (error, results, fields) {
                 if (error) throw error;
                 successArr.push(Transuccess.createSuccess('Blog'));
